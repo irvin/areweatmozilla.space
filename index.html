@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+  	<meta charset="utf-8" />
+    <style>
+      .title { font-size: 2em; margin-right: 0.5em; }
+      img { float: right; margin: 1em; }
+    </style>
+  </head>
+
+  <body>
+    <h1>Are We At Mozilla Yet?</h1>
+
+    <p id="nearest_space">
+      <script id="nearest-tmpl" type="text/x-handlebars-template">
+        {{#if atSpace}}
+          <span>YES! you're inside Mozilla {{space.name}}. Happy building the web!</span>
+        {{else}}
+          <span>NO. The nearest Mozilla Space is Mozilla {{space.name}}, {{space.away}} kms away. (with accuracy of {{accuracy}} meters)</span>
+        {{/if}}
+      </script>
+    </p>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+    <script src="GreatCircle.js"></script>
+    <script src="FindSpace.js"></script>
+  </body>
+</html>
