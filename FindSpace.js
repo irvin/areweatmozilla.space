@@ -122,6 +122,15 @@ navigator.geolocation.getCurrentPosition(function(pos) {
     return nearSpace;
   }(mozSpaces);
 
+  var farestSpace = function(mozSpaces){
+    var farSpace = null;
+    for (id in mozSpaces){
+      if (!farSpace || (mozSpaces[id].away > farSpace.away))
+        farSpace = mozSpaces[id];
+    };
+    return farSpace;
+  }(mozSpaces);
+
   var dat = {
     space: nearSpace,
     atSpace: function(){ return (nearSpace.away <= 0.3); }(),
@@ -154,7 +163,7 @@ navigator.geolocation.getCurrentPosition(function(pos) {
   };
 
   var paper = Raphael("moz_radar", 300, 300);
-  var rCircle = paper.circle(150, 150, 140).attr({fill: 'none', stroke: '#666', 'stroke-width': 2});
+  var rCircle = paper.circle(150, 150, 148).attr({fill: 'none', stroke: '#666', 'stroke-width': 2});
 
   var rSpaceTable = {};
   var rPoints = paper.set();
@@ -164,7 +173,10 @@ navigator.geolocation.getCurrentPosition(function(pos) {
     var space = mozSpaces[id];
 
     var rst = space.rSet = paper.set();
-    var rPoint = paper.circle(150, 10, 10).attr({fill: color.mozRed, stroke: 'none', 'stroke-width': 2});
+
+    // 12756 - http://en.wikipedia.org/wiki/Antipodes
+    var lnAway = 150 - (150 / (Math.log(12756) - Math.log(0.1)) * Math.log(space.away));
+    var rPoint = paper.circle(150, lnAway, 10).attr({fill: color.mozRed, stroke: 'none', 'stroke-width': 2});
     rSpaceTable[rPoint.id] = space;
     rPoints.push(rPoint);
 
@@ -174,7 +186,6 @@ navigator.geolocation.getCurrentPosition(function(pos) {
       paper.rect(0, 0, 300, 300).attr({fill: 'none', stroke: 'none', 'stroke-width': 1}),
       rPoint
     );
-
     rst.transform('R' + Math.round(space.bearing) + ',150, 150');
 
     // Nearest space
