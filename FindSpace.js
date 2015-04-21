@@ -1,4 +1,4 @@
-var mozilla_spaces = [
+var mozSpaces = [
   {
     name: "Community Space Taipei",
     addr_en: "3rd Fl., No. 94, Sec. 1, Ba-de Rd., Zhongzheng District, Taipei City 100, Taiwan",
@@ -93,35 +93,94 @@ var mozilla_spaces = [
   }
 ];
 
-var nearSpaceHbs = Handlebars.compile($("#nearest-tmpl").html());
+var color = {
+  // https://www.mozilla.org/en-US/styleguide/identity/mozilla/color/
+  'mozRed': '#C13832',
+  'mozCharcoal': '#4D4E53'
+}
+
+var nearSpaceTmpl = Handlebars.compile($("#nearest-tmpl").html());
+var spaceInfoTmpl = Handlebars.compile($("#spaceinfo-tmpl").html());
+
+var $nearestSpace = $('#location_info');
 
 navigator.geolocation.getCurrentPosition(function(pos) {
   var crd = pos.coords;
 
-  for (id in mozilla_spaces){
-    var space = mozilla_spaces[id];
+  for (id in mozSpaces){
+    var space = mozSpaces[id];
     space.away = Number(GreatCircle.distance(crd.latitude, crd.longitude, space.lat, space.long).toFixed(2));
-    space.bearing = GreatCircle.bearing(crd.latitude, crd.longitude, space.lat, space.long);
+    space.bearing = Math.round(GreatCircle.bearing(crd.latitude, crd.longitude, space.lat, space.long));
   };
 
-  var nearSpace = function(mozilla_spaces){
+  var nearSpace = function(mozSpaces){
     var nearSpace = null;
-    for (id in mozilla_spaces){
-      if (!nearSpace || (mozilla_spaces[id].away < nearSpace.away)){
-        nearSpace = mozilla_spaces[id];
-          console.log('near', mozilla_spaces[id]);
-      }
+    for (id in mozSpaces){
+      if (!nearSpace || (mozSpaces[id].away < nearSpace.away))
+        nearSpace = mozSpaces[id];
     };
     return nearSpace;
-  }(mozilla_spaces);
+  }(mozSpaces);
 
   var dat = {
     space: nearSpace,
     atSpace: function(){ return (nearSpace.away <= 0.3); }(),
-    accuracy: pos.coords.accuracy
+    accuracy: Math.floor(pos.coords.accuracy)
   };
 
-  $(nearSpaceHbs(dat)).appendTo('#nearest_space');
+  $nearestSpace.html(nearSpaceTmpl(dat));
+
+
+  // http://stackoverflow.com/a/1484514
+  /*
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  */
+
+  function rPointHoverIn(){
+    rPoints.attr({stroke: 'none'});
+    $nearestSpace.html(spaceInfoTmpl(rSpaceTable[this.id]));
+    this.attr({stroke: color.mozCharcoal}).toFront();
+  };
+  function rPointHoverOut(){
+    // console.log('out', rSpaceTable[this.id].name);
+    return;
+  };
+
+  var paper = Raphael("moz_radar", 300, 300);
+  var rCircle = paper.circle(150, 150, 140).attr({fill: 'none', stroke: '#666', 'stroke-width': 2});
+
+  var rSpaceTable = {};
+  var rPoints = paper.set();
+  var nearestPoint;
+
+  for (id in mozSpaces){
+    var space = mozSpaces[id];
+
+    var rst = space.rSet = paper.set();
+    var rPoint = paper.circle(150, 10, 10).attr({fill: color.mozRed, stroke: 'none', 'stroke-width': 2});
+    rSpaceTable[rPoint.id] = space;
+    rPoints.push(rPoint);
+
+    rPoint.hover( rPointHoverIn, rPointHoverOut );
+
+    rst.push(
+      paper.rect(0, 0, 300, 300).attr({fill: 'none', stroke: 'none', 'stroke-width': 1}),
+      rPoint
+    );
+
+    rst.transform('R' + Math.round(space.bearing) + ',150, 150');
+
+    // Nearest space
+    if (space == nearSpace) nearestPoint = rPoint;
+  };
+  nearestPoint.attr({stroke: color.mozCharcoal}).toFront();
 
 }, function(err) {
   alert('location error (' + err.code + '): ' + err.message);

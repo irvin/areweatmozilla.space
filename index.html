@@ -6,21 +6,29 @@
     <style>
       .github-fork-ribbon { background-color: #666; }
       .title { font-size: 2em; margin-right: 0.5em; }
+      #location_info { line-height: 1.5em; }
     </style>
   </head>
 
   <body>
     <h1>Are We At Mozilla Yet?</h1>
 
-    <p id="nearest_space">
+    <p id="location_info">
       <script id="nearest-tmpl" type="text/x-handlebars-template">
         {{#if atSpace}}
-          <span>YES! you're inside Mozilla {{space.name}}. Happy building the web!</span>
+          <span>YES! you're inside <em>Mozilla {{space.name}}</em>. Happy building the web!</span>
         {{else}}
-          <span>NO. The nearest Mozilla venue is Mozilla {{space.name}}.<br> It's {{space.away}} km away. (with accuracy of {{accuracy}} meters)</span>
+          <span>NO. The nearest Mozilla venue is <em>Mozilla {{space.name}}</em>.<br>
+            It's {{space.away}} km away. (with accuracy of {{accuracy}} meters)</span>
         {{/if}}
       </script>
+      <script id="spaceinfo-tmpl" type="text/x-handlebars-template">
+        <p><em>Mozilla {{name}}</em> is {{away}} km away, <br>
+          on an absolute bearing of {{bearing}}° direction.</p>
+      </script>
     </p>
+
+    <div id="moz_radar"></div>
 
     <div class="github-fork-ribbon-wrapper right">
       <div class="github-fork-ribbon">
@@ -30,6 +38,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
     <script src="GreatCircle.js"></script>
     <script src="FindSpace.js"></script>
 
