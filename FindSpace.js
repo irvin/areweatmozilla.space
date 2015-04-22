@@ -30,7 +30,7 @@ var mozSpaces = [
     long: 174.7771253
   },
   {
-    name: "Mozilla Online Ltd.",
+    name: "China (Mozilla Online Ltd.)",
     addr_en: "International Club Office Tower 800A, 21 Jian Guo Men Wai Avenue, Chaoyang District, Beijing 100020, China",
     addr: "北京市 朝阳区 建外大街21号 国际俱乐部办公大楼 800A",
     lat: 39.9113432,
