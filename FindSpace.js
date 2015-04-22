@@ -153,9 +153,15 @@ navigator.geolocation.getCurrentPosition(function(pos) {
   */
 
   function rPointHoverIn(){
+    var point = this;
+    var dat = {
+      space: rSpaceTable[point.id],
+      accuracy: Math.floor(pos.coords.accuracy)
+    };
+
+    $nearestSpace.html(spaceInfoTmpl(dat));
     rPoints.attr({stroke: 'none'});
-    $nearestSpace.html(spaceInfoTmpl(rSpaceTable[this.id]));
-    this.attr({stroke: color.mozCharcoal}).toFront();
+    point.attr({stroke: color.mozCharcoal}).toFront();
   };
   function rPointHoverOut(){
     // console.log('out', rSpaceTable[this.id].name);
