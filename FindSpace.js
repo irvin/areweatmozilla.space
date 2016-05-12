@@ -20,6 +20,12 @@ var mozSpaces = {
       long: 121.0159104
     },
     {
+      name: "Community Space Jakarta",
+      addr_en: "Daerah Khusus Ibukota Jakarta, Jl. Cikini Raya No.9, Cikini, Menteng, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta, Indonesia",
+      lat: -6.1876205,
+      long: 106.8345783
+    },
+    {
       name: "Mountain View",
       addr_en: "331 E. Evelyn Avenue, Mountain View, CA 94041, USA",
       lat: 37.3872783,
@@ -32,11 +38,11 @@ var mozSpaces = {
       long: 174.7771253
     },
     {
-      name: "China (Mozilla Online Ltd.)",
-      addr_en: "International Club Office Tower 800A, 21 Jian Guo Men Wai Avenue, Chaoyang District, Beijing 100020, China",
-      addr: "北京市 朝阳区 建外大街21号 国际俱乐部办公大楼 800A",
-      lat: 39.9113432,
-      long: 116.4402447
+      name: "Beijing (Mozilla Online Ltd.)",
+      addr_en: "China Resources Building, Suite 1708, 8 Jianguomenbei Avenue, Dongcheng District, Beijing 100005, China",
+      addr: "北京市 东城区 建国门北大街8号 华润大厦 17层1708单元",
+      lat: 39.9129981,
+      long: 116.4318727
     },
     {
       name: "Berlin",
@@ -78,6 +84,7 @@ var mozSpaces = {
     {
       name: "Tokyo",
       addr_en: "7-5-6 Roppongi, Minato-ku, Tokyo 106-0032, Japan",
+      addr: "東京都港区六本木7丁目5-6",
       lat: 35.6651776,
       long: 139.7277261
     },
