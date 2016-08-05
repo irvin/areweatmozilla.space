@@ -52,9 +52,9 @@ var mozSpaces = {
     },
     {
       name: "London",
-      addr_en: "101 St Martin‘s Lane, 3rd Floor, London WC2N 4AZ, UK",
-      lat: 51.5103665,
-      long: -0.1271152
+      addr_en: "Metal Box Factory, Suite 441, 4th floor, 30 Great Guildford Street, London SE1 0HS, UK",
+      lat: 51.504629,
+      long: -0.097066
     },
     {
       name: "Paris",
