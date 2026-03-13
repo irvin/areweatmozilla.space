@@ -1,4 +1,4 @@
-https://areweatmozilla.space
+https://areweat.moztw.space
 
 MIT License
 
